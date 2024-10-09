@@ -1,5 +1,5 @@
 export default defineAppConfig({
-  siteName: 'NuxtCommerce',
+  siteName: 'Ruchikar Stores',
   ui: {
     primary: 'red',
     gray: 'neutral',
