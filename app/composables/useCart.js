@@ -8,6 +8,7 @@ export const useCart = () => {
 
     addToCart({ productId })
       .then(res => {
+        console.log("cartitem res:",res.addToCart)
         updateCart([...cart.value, res.addToCart.cartItem]);
         addToCartButtonStatus.value = 'added';
         setTimeout(() => (addToCartButtonStatus.value = 'add'), 2000);

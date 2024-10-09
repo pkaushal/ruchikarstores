@@ -28,14 +28,14 @@ const { cart } = useCart();
         </div>
       </div>
       <div class="text-sm font-semibold p-4 text-neutral-600 dark:text-neutral-400">
-        Paying a total of ${{ cart.reduce((total, item) => total + parseFloat(item.variation.node.salePrice), 0).toFixed(2) }} for {{ cart.length }} products.
+        Paying a total of ₹{{ cart.reduce((total, item) => total + (parseFloat(item.product.node.price) * parseFloat(item.quantity)), 0).toFixed(2) }} for {{ cart.length }} products.
       </div>
       <button
         type="submit"
         :disabled="checkoutStatus !== 'order'"
         class="pay-button-bezel w-full h-12 rounded-xl relative font-semibold text-white dark:text-black text-lg flex justify-center items-center">
         <Transition name="slide-up">
-          <div v-if="checkoutStatus === 'order'" class="absolute">Pay ${{ cart.reduce((total, item) => total + parseFloat(item.variation.node.salePrice), 0).toFixed(2) }}</div>
+          <div v-if="checkoutStatus === 'order'" class="absolute">Pay ₹{{ cart.reduce((total, item) => total + (parseFloat(item.product.node.price) * parseFloat(item.quantity)), 0).toFixed(2) }}</div>
           <UIcon v-else-if="checkoutStatus === 'processing'" class="absolute" name="i-svg-spinners-90-ring-with-bg" size="22" />
         </Transition>
       </button>

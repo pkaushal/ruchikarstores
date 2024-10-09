@@ -8,10 +8,16 @@ export const addToCartMutation = gql`
         quantity
         product {
           node {
-            sku
-            slug
-            name
-          }
+            ... on SimpleProduct {
+                  sku
+                  slug
+                  name
+                  price(format: RAW)
+                  image {
+                    sourceUrl(size: LARGE)
+                  }
+                }
+            }
         }
         variation {
           node {

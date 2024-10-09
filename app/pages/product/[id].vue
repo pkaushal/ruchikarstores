@@ -105,15 +105,15 @@ const { handleAddToCart, addToCartButtonStatus } = useCart();
             <h1 class="text-2xl font-semibold mb-1">{{ product.name }}</h1>
             <div class="flex justify-between flex-row items-baseline">
               <div class="flex flex-row items-baseline">
-                <p class="text-xl font-bold text-alizarin-crimson-700" v-html="product.salePrice"></p>
-                <p class="text-sm ml-2">VAT included</p>
+                <p class="text-xl font-bold text-alizarin-crimson-700" v-html="product.price"></p>
+                <!-- <p class="text-sm ml-2">VAT included</p> -->
               </div>
             </div>
-            <div class="flex-wrap items-baseline flex-row flex">
+            <!-- <div class="flex-wrap items-baseline flex-row flex">
               <p class="text-sm">Originally:</p>
               <p class="text-sm ml-1 line-through" v-html="product.regularPrice"></p>
               <p class="text-sm ml-1 text-alizarin-crimson-700">{{ calculateDiscountPercentage }}%</p>
-            </div>
+            </div> -->
           </div>
 
           <div class="flex gap-2 px-3 lg:px-0" v-for="(variation, i) in product.productTypes?.nodes" :key="i">
@@ -122,12 +122,12 @@ const { handleAddToCart, addToCartButtonStatus } = useCart();
                 :to="`/product/${vars.slug}-${product.sku.split('-')[0]}`"
                 :class="[
                   'flex w-12 rounded-lg border-2 select-varitaion transition-all duration-200 bg-neutral-200 dark:bg-neutral-800',
-                  vars.allPaColor.nodes[0].name === product.allPaColor.nodes[0].name ? 'selected-varitaion' : 'border-[#9b9b9b] dark:border-[#8c8c8c]',
+                  vars?.allPaColor?.nodes[0]?.name === product.allPaColor?.nodes[0]?.name ? 'selected-varitaion' : 'border-[#9b9b9b] dark:border-[#8c8c8c]',
                 ]">
                 <NuxtImg
-                  :alt="vars.allPaColor.nodes[0].name"
-                  :src="vars.image.sourceUrl"
-                  :title="vars.allPaColor.nodes[0].name"
+                  :alt="vars?.allPaColor?.nodes[0]?.name"
+                  :src="vars?.image?.sourceUrl"
+                  :title="vars?.allPaColor?.nodes[0]?.name"
                   class="rounded-md border-2 border-white dark:border-black" />
               </NuxtLink>
             </div>
@@ -136,14 +136,14 @@ const { handleAddToCart, addToCartButtonStatus } = useCart();
           <div class="pb-4 px-3 lg:px-0 border-b border-[#efefef] dark:border-[#262626]">
             <div class="text-sm font-semibold leading-5 opacity-50 flex gap-1">
               Size:
-              <div class="uppercase">{{ selectedVariation.attributes.nodes.map(attr => attr.value).toString() }}</div>
+              <div class="uppercase">{{ selectedVariation?.attributes?.nodes?.map(attr => attr.value).toString() }}</div>
             </div>
             <div class="flex gap-2 mt-2 mb-4 flex-wrap">
               <label
                 class="py-1 px-3 rounded-md cursor-pointer select-varitaion border-2 border-[#9b9b9b] dark:border-[#8c8c8c] transition-all duration-200"
                 v-for="variation in sortedVariations"
                 :key="variation.databaseId"
-                :class="[variation.stockStatus === 'OUT_OF_STOCK' ? 'disabled' : '', selectedVariation.databaseId === variation.databaseId ? 'selected-varitaion' : '']">
+                :class="[variation.stockStatus === 'OUT_OF_STOCK' ? 'disabled' : '', selectedVariation?.databaseId === variation.databaseId ? 'selected-varitaion' : '']">
                 <input type="radio" class="hidden" name="variation" :value="variation" :disabled="variation.stockStatus === 'OUT_OF_STOCK'" v-model="selectedVariation" />
                 <span class="font-semibold uppercase" :title="`Size: ${variation.attributes.nodes.map(attr => attr.value).toString()}`">
                   {{ variation.attributes.nodes.map(attr => attr.value).toString() }}
@@ -153,7 +153,7 @@ const { handleAddToCart, addToCartButtonStatus } = useCart();
 
             <div class="flex">
               <button
-                @click="handleAddToCart(selectedVariation.databaseId)"
+                @click="handleAddToCart(product?.databaseId)"
                 :disabled="addToCartButtonStatus !== 'add'"
                 class="button-bezel w-full h-12 rounded-md relative tracking-wide font-semibold text-white text-sm flex justify-center items-center">
                 <Transition name="slide-up">

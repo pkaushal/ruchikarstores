@@ -23,9 +23,9 @@ useHead({
     <NuxtPage />
   </div>
   <AppFooter />
-  <Notivue v-slot="item">
+  <!-- <Notivue v-slot="item">
     <Notification :item="item" :theme="materialTheme" />
-  </Notivue>
+  </Notivue> -->
 </template>
 
 <style lang="postcss">

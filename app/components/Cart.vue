@@ -12,24 +12,24 @@ const { order } = useCheckout();
         <div class="w-[calc(100vw-24px)] sm:w-full md:w-80 relative">
           <div class="md:absolute h-full w-full overflow-auto">
             <div
-              v-for="product in cart.slice().reverse()"
-              :key="product.key"
+              v-for="cartItem in cart.slice().reverse()"
+              :key="cartItem.key"
               class="flex bg-black/5 dark:bg-white/10 m-3 p-3 gap-3 rounded-3xl items-center group relative max-md:pr-9">
-              <NuxtImg :src="product.variation.node.image.sourceUrl" class="w-24 h-28 object-cover shadow-md rounded-2xl" />
+              <NuxtImg :src="cartItem.product.node.image.sourceUrl" class="w-24 h-28 object-cover shadow-md rounded-2xl" />
               <div class="flex-1 gap-1 flex flex-col">
-                <div class="font-medium text-sm line-clamp-2 overflow-hidden text-ellipsis">{{ product.product.node.name }}</div>
-                <div class="font-bold">${{ Number(product.variation.node.salePrice).toFixed(2) }}</div>
-                <div class="flex-wrap text-neutral-600 dark:text-neutral-300 items-baseline text-xs gap-1 flex-row flex">
+                <div class="font-medium text-sm line-clamp-2 overflow-hidden text-ellipsis">{{ cartItem.product.node.name }}</div>
+                <div class="font-bold">₹{{ Number(cartItem.product.node.price).toFixed(2) }}</div>
+                <!-- <div class="flex-wrap text-neutral-600 dark:text-neutral-300 items-baseline text-xs gap-1 flex-row flex">
                   <p>Originally:</p>
-                  <p class="line-through">${{ Number(product.variation.node.regularPrice).toFixed(2) }}</p>
-                  <p class="text-alizarin-crimson-700">-{{ ((1 - product.variation.node.salePrice / product.variation.node.regularPrice) * 100).toFixed(0) }}%</p>
-                </div>
+                  <p class="line-through">${{ Number(product.regularPrice).toFixed(2) }}</p>
+                  <p class="text-alizarin-crimson-700">-{{ ((1 - product.salePrice / product.regularPrice) * 100).toFixed(0) }}%</p>
+                </div> -->
                 <div class="text-xs font-medium text-neutral-600 dark:text-neutral-300">
-                  Size: {{ product.variation.attributes.map(attr => attr.value.toUpperCase()).join(', ') }} • Qty: {{ product.quantity }}
+                  Size: {{ cartItem.product.variation?.attributes?.map(attr => attr.value.toUpperCase()).join(', ') }} • Qty: {{ cartItem.quantity }}
                 </div>
               </div>
               <button
-                @click="handleRemoveFromCart(product.key)"
+                @click="handleRemoveFromCart(cartItem.key)"
                 class="absolute md:opacity-0 group-hover:opacity-100 top-2 right-2 md:-top-1 md:-right-1 transition bg-red-700 flex p-1 items-center justify-center rounded-full hover:bg-red-500 active:scale-95">
                 <UIcon :name="removeFromCartButtonStatus === 'remove' ? 'i-iconamoon-trash-light' : 'i-svg-spinners-90-ring-with-bg'" size="18" class="text-white" />
               </button>

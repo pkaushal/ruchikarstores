@@ -2,7 +2,8 @@
 const categoriesData = ref([]);
 
 onMounted(() => {
-  listCategories().then(response => (categoriesData.value = response.productCategories.nodes.filter(category => category.products.nodes.length && category.children.nodes.length)));
+  // listCategories().then(response => (categoriesData.value = response.productCategories.nodes.filter(category => category.products.nodes.length && category.children.nodes.length)));
+  listCategories().then(response => (categoriesData.value = response.productCategories.nodes.filter(category => category.products.nodes.length)));
 });
 
 const categories = computed(() => categoriesData.value);
