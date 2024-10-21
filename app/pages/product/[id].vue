@@ -105,15 +105,16 @@ const { handleAddToCart, addToCartButtonStatus } = useCart();
             <h1 class="text-2xl font-semibold mb-1">{{ product.name }}</h1>
             <div class="flex justify-between flex-row items-baseline">
               <div class="flex flex-row items-baseline">
-                <p class="text-xl font-bold text-alizarin-crimson-700" v-html="product.price"></p>
+                <p v-if="product.salePrice" class="text-xl font-bold text-alizarin-crimson-700" v-html="product.salePrice"></p>
+                <p v-else="product.price" class="text-xl font-bold text-alizarin-crimson-700" v-html="product.price"></p>
                 <!-- <p class="text-sm ml-2">VAT included</p> -->
               </div>
             </div>
-            <!-- <div class="flex-wrap items-baseline flex-row flex">
+            <div class="flex-wrap items-baseline flex-row flex" v-if="product.salePrice">
               <p class="text-sm">Originally:</p>
               <p class="text-sm ml-1 line-through" v-html="product.regularPrice"></p>
               <p class="text-sm ml-1 text-alizarin-crimson-700">{{ calculateDiscountPercentage }}%</p>
-            </div> -->
+            </div>
           </div>
 
           <div class="flex gap-2 px-3 lg:px-0" v-for="(variation, i) in product.productTypes?.nodes" :key="i">
